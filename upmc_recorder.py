@@ -88,7 +88,7 @@ class UPMCRecorder(CampusManagerClient):
             # return json.dumps(info)
         elif action == 'START_RECORDING':
             logger.info('Starting recording with params %s', params)
-            self.set_status(status='recording', remaining_space='auto')
+            self.set_status(status='initializing', remaining_space='auto')
             result = self.omnibox_request('GetStatus')
             s = re.search(self.MONARCH_STATUS_RE, result)
             if s.group('record_state') == 'DISABLED':
@@ -136,9 +136,10 @@ class UPMCRecorder(CampusManagerClient):
                     'profile': params['profile'],
                     'unlisted': 'no',
                 }
+            self.set_status(status='recording')
         elif action == 'STOP_RECORDING':
             logger.info('Stopping recording.')
-            self.set_status(status='recorder_idle', remaining_space='auto')
+            self.set_status(status='ready', remaining_space='auto')
             result = self.omnibox_request('GetStatus')
             s = re.search(self.MONARCH_STATUS_RE, result)
             if s.group('record_state') == 'ON':
