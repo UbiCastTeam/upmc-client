@@ -74,6 +74,10 @@ class UPMCRecorder(CampusManagerClient):
         self.temp_params = None
         self.wait_params = None
         self.metadata = None
+        try:
+            self.update_capabilities()
+        except Exception:
+            pass  # do not block the client
 
     def handle_action(self, action, params):
         if action == 'SHUTDOWN':
@@ -189,6 +193,8 @@ class UPMCRecorder(CampusManagerClient):
             else:
                 logger.error('L\'enregistrement n\'était pas démarré')
         elif action == 'LIST_PROFILES':
+            logger.info('Updating capabilities.')
+            self.update_capabilities()
             logger.info('Returning list of profiles.')
             return json.dumps(self.PROFILES)
         else:
@@ -256,10 +262,10 @@ if __name__ == '__main__':
     parser.add_argument('name', help='Client name, for example: "amphi15".')
     args = parser.parse_args()
     # start client
-    logger = logging.getLogger(args.name)
+    logger = logging.getLogger('recorder_%s' % args.name)
     UPMCRecorder.LOCAL_CONF = UPMCRecorder.HOME_DIR + '.cm_upmc_%s.json' % args.name
     if not os.path.exists(UPMCRecorder.LOCAL_CONF):
-        raise Exception('The file %s does not exists.' % UPMCRecorder.LOCAL_CONF)
+        raise Exception('The file "%s" does not exists.' % UPMCRecorder.LOCAL_CONF)
     client = UPMCRecorder()
     try:
         client.long_polling_loop()
