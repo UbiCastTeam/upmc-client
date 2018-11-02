@@ -1,2 +1,3 @@
-# upmc-client
-Client used for recording management at UPMC
+# upmc-recorder
+
+UPMC recording script to handle Monarch, Campus Manager and MediaServer interactions
