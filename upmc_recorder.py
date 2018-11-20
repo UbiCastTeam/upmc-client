@@ -47,6 +47,8 @@ class UPMCRecorder(CampusManagerClient):
         'CAPABILITIES': {  # This list makes available or not actions buttons in Campus Manager
             'recording': {},
         },
+        'URL': 'https://campusmanager-mserver.upmc.fr',
+        'API_KEY': '',
         'MS_BASE_URL': 'https://mediaserver.captation.upmc.fr/api/v2/',
         'MS_API_KEY': '',
         'MONARCH_LOGIN': 'admin',
