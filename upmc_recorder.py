@@ -58,7 +58,7 @@ class UPMCRecorder(CampusManagerClient):
         'RECORDER_NAS_PWD': 'roomX/',  # This should be a path on the NAS
     }
 
-    HOME_DIR = '/home/omnictrl/'
+    BASE_DIR = '/data/omnictrl/'
     MONARCH_STATUS_RE = re.compile(r'RECORD:(?P<record_state>[A-Z]+),STREAM:(?P<stream_mode>[A-Z]+),(?P<stream_state>[A-Z]+),NAME:(?P<device_name>.+)$', re.IGNORECASE)
     VIDEO_FILE = 'video_original.mp4'
     PROFILES = {'omni': {
@@ -245,7 +245,7 @@ class UPMCRecorder(CampusManagerClient):
             os.makedirs(rep_pwd)
             os.chown(rep_pwd, 118, 125)
         if video_fname != self.VIDEO_FILE:
-            for file in glob.glob(self.HOME_DIR + self.conf['RECORDER_NAS_PWD'] + video_fname):
+            for file in glob.glob(self.BASE_DIR + self.conf['RECORDER_NAS_PWD'] + video_fname):
                 os.chown(file, 118, 125)
                 shutil.move(file, rep_pwd + self.VIDEO_FILE)
 
@@ -264,7 +264,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     # start client
     logger = logging.getLogger('recorder_%s' % args.name)
-    UPMCRecorder.LOCAL_CONF = UPMCRecorder.HOME_DIR + '.cm_upmc_%s.json' % args.name
+    UPMCRecorder.LOCAL_CONF = UPMCRecorder.BASE_DIR + '.cm_upmc_%s.json' % args.name
     if not os.path.exists(UPMCRecorder.LOCAL_CONF):
         raise Exception('The file "%s" does not exists.' % UPMCRecorder.LOCAL_CONF)
     client = UPMCRecorder()
