@@ -266,7 +266,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     # start client
     logger = logging.getLogger('recorder_%s' % args.name)
-    UPMCRecorder.LOCAL_CONF = UPMCRecorder.BASE_DIR + '.cm_upmc_%s.json' % args.name
+    UPMCRecorder.LOCAL_CONF = UPMCRecorder.BASE_DIR + 'config_upmc_%s.json' % args.name
     if not os.path.exists(UPMCRecorder.LOCAL_CONF):
         raise Exception('The file "%s" does not exists.' % UPMCRecorder.LOCAL_CONF)
     client = UPMCRecorder()
