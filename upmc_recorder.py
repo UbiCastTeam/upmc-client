@@ -153,7 +153,7 @@ class UPMCRecorder(CampusManagerClient):
                     }
                 self.ms_streaming_control('STOP_STREAMING', params)
                 self.omnibox_request('StopStreamingAndRecording')
-                self.ms_video_upload(self.FILE + '-[*.mp4', self.metadata)
+                self.ms_video_upload(self.conf['RECORDER_FILE'] + '-[*.mp4', self.metadata)
                 if 'title' in self.wait_params:
                     if 'live' in self.wait_params:
                         result = self.ms_streaming_control('PREPARE_STREAMING', self.wait_params)
